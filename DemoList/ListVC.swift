@@ -35,6 +35,7 @@ class ListVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // Getting Item List
     func getItemList() {
         Loading(string: "Loading..")
         DispatchQueue.global(qos: .background).async {
@@ -73,17 +74,20 @@ class ListVC: UIViewController {
 
 
 
+//Extending class ListVC with UITableViewDataSource and UITableViewDelegate to populate json data into table
 
 extension ListVC: UITableViewDataSource, UITableViewDelegate {
     // table view data source methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemList.count
     }
-    
+    //Table cell heights
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return 90 //putting up to 90
     }
-    
+    //Displaying information in every cell and working out the behaviour of cell
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListVCCell", for: indexPath) as! ListVCCell
         cell.selectionStyle = .none;
@@ -95,10 +99,12 @@ extension ListVC: UITableViewDataSource, UITableViewDelegate {
             let thumbImageUrl = URL(string: img)
             
             //cell.imgListData.sd_setImage(with: thumbImageUrl, placeholderImage: UIImage(named: "placeholder"))
+            //Image shrinks and widens the title and abstract
             cell.imgListData.sd_setImage(with: thumbImageUrl, placeholderImage: UIImage(named: "placeholder"), options: SDWebImageOptions.allowInvalidSSLCertificates, completed: { (image, error, cache, url) in
                 if error != nil {
                     cell.imgListData.image = UIImage(named: "placeholder")
-                    cell.c_imgsize.constant = 0
+                    cell.c_imgsize.constant = 0//putting image size to zero so that if there is no image it wont show
+
                 } else {
                     cell.c_imgsize.constant = 70
                     cell.imgListData.image = image
@@ -112,7 +118,7 @@ extension ListVC: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    // Delegate Methods
+    // Delegate Methods: Selecting cell will open the in app safari browser with url from json data (image url)
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
