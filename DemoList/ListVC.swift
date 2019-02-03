@@ -35,7 +35,7 @@ class ListVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // Getting Item List
+    // Getting Item Listx
     func getItemList() {
         Loading(string: "Loading..")
         DispatchQueue.global(qos: .background).async {
